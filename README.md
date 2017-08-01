@@ -1,2 +1,2 @@
 # PEN
-Source code for the Pedido de Emissão de Nota Fiscal (PEN) application
+Source code for the "Pedido de Emissão de Nota Fiscal (PEN)"" application
