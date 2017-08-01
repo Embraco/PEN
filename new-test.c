@@ -5,8 +5,6 @@ int main(int argc, char *argv[]) {
 
    printf("Hello, World!\n\n");
 
-   printf("Hello, World again!\n\n");
-
    /* Loops and prints the parameters passed */
    printf("argc: %d\n", argc);
 
