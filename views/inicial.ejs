@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>PEN - Pedido de Emiss&atilde;o de Nota Fiscal</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="<%= static_path + "/bootstrap/css/theme/" + theme + "/bootstrap.css" %>" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="<%= static_path + "/bootstrap/css/jumbotron-narrow.css" %>" rel="stylesheet">
+	 
+	<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+	<link href="<%= static_path + "/jquery-ui/jquery-ui.css" %>" rel="stylesheet">
+	<script src="<%= static_path + "/jquery/jquery-1.11.3.min.js" %>"></script>
+	<script src="<%= static_path + "/jquery-ui/jquery-ui.min.js" %>"></script>
+   
+	<script>
+		$( function() {
+		 var dateFormat = "d M, y",
+			from = $( "#from" )
+			  .datepicker({
+				 defaultDate: "+1w",
+				 changeMonth: true,
+				 numberOfMonths: 2
+			  })
+			  .on( "change", function() {
+				 to.datepicker( "option", "minDate", getDate( this ) );
+			  }),
+			to = $( "#to" ).datepicker({
+			  defaultDate: "+1w",
+			  changeMonth: true,
+			  numberOfMonths: 2
+			})
+			.on( "change", function() {
+			  from.datepicker( "option", "maxDate", getDate( this ) );
+			});
+	 
+		 function getDate( element ) {
+			var date;
+			try {
+			  date = $.datepicker.parseDate( dateFormat, element.value );
+			} catch( error ) {
+			  date = null;
+			}
+	 
+			return date;
+		 }
+	  } );
+	  </script>
+
+</head>
+
+  <body>
+
+    <div class="container">
+		<div class="page-header">
+		<center>
+		  <img src="images/embraco.png"></img>
+		  <h1 class="text-muted"><strong>PEN</strong><br><small>Pedido de Emiss&atilde;o de Nota Fiscal</h1>
+		</center>
+		</div>
+		
+		<div><center>
+		<label for="from">De</label>
+		<input type="text" id="from" name="from" size="8">
+		<label for="to">At&eacute;</label>
+		<input type="text" id="to" name="to" size="8">
+		<label>Status</lable>
+		<select name="pen-status">
+			<option value="Todos" selected>Todos</option>
+			<option value="A Liberar">A Liberar</option>
+			<option value="Não Liberados">N&atilde;o Liberados</option>
+			<option value="Emitidos">Emitidos</option>
+			<option value="Recusados">Recusados</option>
+			<option value="Em Edição">Em Edi&ccedil;&atilde;o</option>
+		</select>
+		</center></div>
+	
+		<p><center>
+		<button id="button-consulta" type="button" class="btn btn-primary">Pesquisar</button>
+		<button id="button-novopen" class="btn btn-success" data-toggle="modal" data-target="#PENModal">Novo PEN</button>
+		<button id="button-ajuda" class="btn btn-primary" data-toggle="modal" data-target="#ajuda-modal">Ajuda</button>
+		</center></p>
+		
+		<table id="tabela-resultado" class="table table-bordered" style="display:none">
+		 <thead>
+			<tr>
+			  <th>#</th>
+			  <th>Autor</th>
+			  <th>Status</th>
+			</tr>
+		 </thead>
+		 <tbody>
+			<tr>
+			  <td>1</td>
+			  <td>João</td>
+			  <td>A liberar</td>
+			</tr>
+			<tr>
+			  <td>2</td>
+			  <td>Maria</td>
+			  <td>Não liberado</td>
+			</tr>
+			<tr>
+			  <td>3</td>
+			  <td>Pedro</td>
+			  <td>Emitido</td>
+			</tr>
+			<tr>
+			  <td>4</td>
+			  <td>José</td>
+			  <td>Recusado</td>
+			</tr>
+			<tr>
+			  <td>5</td>
+			  <td>Joaquina</td>
+			  <td>Em edição</td>
+			</tr>
+		</tbody>
+	  </table>
+	  
+      <div class="footer">
+        <p>&copy; Embraco 2017. Version 0.0.3</p>
+      </div>
+ 
+      <!-- Modal Novo PEN-->
+       <div class="modal fade" id="PENModal" tabindex="-1" role="dialog" aria-labelledby="PENModal" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               <h4 class="modal-title">Pedido de Emiss&atilde;o de Nota Fiscal</h4>
+             </div>
+             <div class="modal-body">
+               <form id="signupForm" role="form">
+                 <input type="hidden" id="theme" name="theme" value="<%= theme %>"/>
+                 <div class="form-group">
+                   <label for="name">Name</label>
+                   <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+                 </div>
+                 <div class="form-group">
+                   <label for="email">Email address</label>
+                   <input type="email" class="form-control" id="email" name="email" placeholder="Your email address">
+                 </div>
+                 <div class="form-group">
+                   <label for="previewAccess">Interested in Preview Access?</label>
+                   <select class="form-control" name="previewAccess">
+                     <option>Yes</option>
+                     <option>No</option>
+                   </select>
+                 </div>
+             </div>
+             <div class="modal-footer">
+               <button id="salvar" type="button" class="btn btn-primary" data-dismiss="modal">Salvar</button>
+             </div>
+           </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+       </div><!-- /.modal -->
+		 
+      <!-- Modal Ajuda-->
+       <div class="modal fade" id="ajuda-modal" tabindex="-1" role="dialog" aria-labelledby="ajuda-modal" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               <h4 class="modal-title">Ajuda</h4>
+             </div>
+             <div class="modal-body">
+					<p>Para criar um PEN, clique no bot&atilde;o <strong>Novo PEN</strong>. Para fazer consultas, use o campo <strong>Status</strong>. Caso saiba o per&iacute;odo em que o PEN foi criado, &eacute; s&oacute; informar a data inicial e final</p>
+					<p>Quando criamos um novo PEN, todos os campos do formul&aacute;rio devem ser preenchidos</p>
+					<p><strong>Observa&ccedil;&otilde;es:</strong></p>
+					<ol>
+						<li>Dados do Destinatário deve ser o mesmo do cadastro no SAP, para fornecedores consultar transação SAP XK03 e para Clientes a transação SAP XD03</li>
+						<li>Utilizar o campo condição de pagamento somente quando a remessa/operação for Venda e o Destinatário deve estar cadastrado como Cliente (XD03)</li>
+						<li>Quando o frete for pago pela Embraco, flegar CIF e pode ser debitado em Centro de Custo ou OS conforme campo a ser preenchido no PEN, já quando for pago pelo Fornecedor, flegar FOB e somente mencionar o Centro de Custo (não haverá débito)</li>
+						<li>Quando remessa para serviço externo, informar nome e CPF do Funcionário</li>
+						<li>Quando de remessa de Equipamentos, sempre informar o número de série, equipamentos de informática também o código Embraco</li>
+						<li>Quando Ativo, sempre informar o número do patrimônio</li>
+						<li>Emissão do documento somente para saída de material nacional, EXCETO notebook. No caso de saída para exterior, entrar em contato com a equipe de Order Management ou Exportação</li>
+					</ol>
+					<p>Obs.: O Recebimento emitirá a NF somente com a solicitação do funcionário informando o número do PEN. Ligar para ramal: 2356 ou 2077 solicitando a emissão do PEN.</p>
+					<p>Após a NF ser emitida o solicitante receberá o retorno por email, dar duplo click e abrir a PEN onde terá o número da NF. As NFs devem ser retiradas no Recebimento Fiscal, prazo máximo de 20 horas. Para cancelamento de NFs, prazo de 24 horas após a emissão da mesma.</p>
+					<p>Quando ocorrer problemas na aplicação, entrar em contato com o <a href="https://helpdesk.embraco.com">Help Desk</a> e abrir um chamado.</p>
+					<h3>Contatos</h3>
+					<address>
+						<table style="width:100%">
+							<tr>
+							 <td><strong><a href="mailto:sunita.s.monteiro@embraco.com">Sunita Sandhya Monteiro dos Santos</a></strong></td>
+							 <td><strong><a href="mailto:elenita.regis@embraco.com">Elenita Regis</a></strong></td>
+							</tr>
+							<tr>
+							 <td>Operation Logistics</td>
+							 <td>Operation Logistics - Brazil Plant</td>
+							</tr>
+							<tr>
+							 <td>+55-47-3441-2578</td>
+							 <td>+55-47-3441-2077</td>
+							</tr>
+						</table>
+					</address>
+             </div>
+             <div class="modal-footer">
+               <button id="fechar" type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+             </div>
+           </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+       </div><!-- /.modal -->
+		 
+    </div> <!-- /container -->
+
+    <script src="<%= static_path + "/bootstrap/js/bootstrap.min.js" %>"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $("#button-consulta").click(function() {
+        $("#tabela-resultado").show();
+      });
+    })
+    </script>
+  </body>
+</html>
